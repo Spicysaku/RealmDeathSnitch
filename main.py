@@ -1,5 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
+import Realm_image_parser
 
 # Realmeye graveyard url
 url = "https://www.realmeye.com/graveyard-of-player/Spncerfrez"
@@ -33,6 +34,22 @@ death_list_dict = []
 for death in deathlist:
     death_soup = BeautifulSoup(death, "html.parser")
     td_list = death_soup.find_all('td')
+
+    equipment_soup = BeautifulSoup(str(td_list[7]), "html.parser")
+    with open("equipment.html", "w") as file:
+        file.write(str(equipment_soup.prettify()))
+
+    equipment_soup_list = equipment_soup.find_all('a')
+
+    equipment_array = []
+    for equipment in equipment_soup_list:
+        name = str(equipment).split('title="')[1].split('">')[0]
+        equipment_array.append(name)
+        x_y_coords = str(equipment).split('background-position:')[1].split('" title')[0]
+        x = abs(int(x_y_coords.split('px ')[0]))
+        y = abs(int(x_y_coords.split('px ')[1].split('px')[0]))
+        # Realm_image_parser.item_image_parser(x,y,"renders.png",name)
+
     death_dict = {
         "time": td_list[0].text,
         #"skindata": td_list[1].text,
