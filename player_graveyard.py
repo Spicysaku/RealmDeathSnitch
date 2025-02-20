@@ -18,9 +18,6 @@ html = html_bytes.decode("utf-8")
 #     soup = BeautifulSoup(html, "html.parser")
 #     file.write(str(soup.prettify()))
 
-# Get dead character sprites
-# SEEMS IMPOSSIBLE PLS HELP
-
 # Find the table
 table = html.split('<div class="table-responsive">')[1].split('</div>')[0]
 tablebody = table.split('<tbody>')[1].split('</tbody>')[0]
@@ -102,6 +99,6 @@ for death in deathlist:
 x = death_list_dict[1]["skindata"]['x']
 y = death_list_dict[1]["skindata"]['y']
 print(f'{x},{y}')
-RIP.skin_image_parser(x, y, "sheets.png", "Test")
+RIP.skin_image_parser(x, y, "Test")
 for item in death_list_dict[1]["equipment"]:
-    RIP.item_image_parser(item["x"],item["y"],"renders.png",item["name"])
+    RIP.item_image_parser(item["x"],item["y"],item["name"])
