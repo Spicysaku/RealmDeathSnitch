@@ -1,9 +1,9 @@
 import urllib.request
 from bs4 import BeautifulSoup
-import Realm_image_parser
+import Realm_image_parser as RIP
 
 # Realmeye graveyard url
-url = "https://www.realmeye.com/graveyard-of-player/Spncerfrez"
+url = "https://www.realmeye.com/graveyard-of-player/Cupdog"
 
 # Open the url
 req = urllib.request.Request(url, headers={'User-Agent' : "Magic Browser"})
@@ -44,7 +44,7 @@ for death in deathlist:
 
     # Debugging Part 3
     #with open("equipment.html", "w") as file:
-    #    file.write(str(equipment_soup.prettify()))
+        #file.write(str(death_soup.prettify()))
 
     # Unparsed list of equipment on dead character
     equipment_soup_list = equipment_soup.find_all('a')
@@ -54,6 +54,8 @@ for death in deathlist:
     # Loop through the equipment and parse it
     for equipment in equipment_soup_list:
         name = str(equipment).split('title="')[1].split('">')[0]
+        if '\n' in name:
+            name = name.split('\n')[0]
         x_y_coords = str(equipment).split('background-position:')[1].split('" title')[0]
         x = abs(int(x_y_coords.split('px ')[0]))
         y = abs(int(x_y_coords.split('px ')[1].split('px')[0]))
@@ -63,18 +65,24 @@ for death in deathlist:
 
         # An equipment has a name, x and y coordinates
         equipment_dict = {
-            name: name,
-            x: x,
-            y: y
+            'name': name,
+            'x': x,
+            'y': y
         }
 
         # Append the equipment to the equipment array
         equipment_array.append(equipment_dict)
 
+    #Parse skin data
+    skin_x_y = str(td_list[1]).split('background-position:')[1].split('">')[0]
+    x = abs(int(skin_x_y.split('px ')[0]))
+    y = abs(int(skin_x_y.split('px ')[1].split('px')[0]))
+    skin_loc = {'x': x, 'y': y}
+
     # Combine all the data into a dictionary
     death_dict = {
         "time": td_list[0].text,
-        #"skindata": td_list[1].text,
+        "skindata": skin_loc,
         "classname": td_list[2].text,
         "level": td_list[3].text,
         "base_fame": td_list[4].text,
@@ -86,4 +94,14 @@ for death in deathlist:
     }
     death_list_dict.append(death_dict)
 
-print(str(death_list_dict[0]))
+# Debugging Part 4
+#skindata = death_list_dict[1]["skindata"]
+#print(death_list_dict[1])
+#with open("skin_data.html","w") as file:
+    #file.write(str(skindata))
+x = death_list_dict[1]["skindata"]['x']
+y = death_list_dict[1]["skindata"]['y']
+print(f'{x},{y}')
+RIP.skin_image_parser(x, y, "sheets.png", "Test")
+for item in death_list_dict[1]["equipment"]:
+    RIP.item_image_parser(item["x"],item["y"],"renders.png",item["name"])
