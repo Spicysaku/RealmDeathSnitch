@@ -1,7 +1,6 @@
 import urllib.request
 from bs4 import BeautifulSoup
 import Realm_image_parser as RIP
-import Realm_image_parser
 
 def guild_graveyard(guild_name:str, death_index:int) -> dict:
     guild_name = guild_name.replace(" ", "%20")
@@ -85,7 +84,7 @@ def guild_graveyard(guild_name:str, death_index:int) -> dict:
 
     x = death_dict["skindata"]['x']
     y = death_dict["skindata"]['y']
-    RIP.skin_image_parser(x, y,"Test")
+    RIP.skin_image_parser(x, y, death_dict["player-name"])
     for item in death_dict["equipment"]:
         RIP.item_image_parser(item["x"],item["y"],item["name"])
 

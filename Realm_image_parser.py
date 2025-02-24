@@ -2,7 +2,7 @@ from PIL import Image
 import os
 
 def item_image_parser(x,y,itemname):
-    im = Image.open("renders.png")
+    im = Image.open("./images/renders.png")
 
     left = x
     top = y
@@ -13,7 +13,7 @@ def item_image_parser(x,y,itemname):
     os.makedirs("./itempics", exist_ok=True)
     im1.save(f"./itempics/{itemname}.png")
 
-def skin_image_parser(x,y,itemname):
+def skin_image_parser(x,y,playername):
     im = Image.open("./images/sheets.png")
 
     left = x
@@ -23,6 +23,4 @@ def skin_image_parser(x,y,itemname):
 
     im1 = im.crop((left, top, right, bottom))
     os.makedirs("./skinpics", exist_ok=True)
-    im1.save(f"./skinpics/{itemname}.png")
-
-skin_image_parser(2850, 550,"Test")
+    im1.save(f"./skinpics/{playername}.png")
