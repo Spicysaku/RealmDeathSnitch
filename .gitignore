@@ -5,3 +5,4 @@ __pycache__/
 itempics/
 skinpics/
 images/
+*.env

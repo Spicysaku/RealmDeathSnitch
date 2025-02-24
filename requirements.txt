@@ -8,11 +8,13 @@ certifi==2025.1.31
 charset-normalizer==3.4.1
 discord==2.3.2
 discord.py==2.5.0
+dotenv==0.9.9
 frozenlist==1.5.0
 idna==3.10
 multidict==6.1.0
 pillow==11.1.0
 propcache==0.2.1
+python-dotenv==1.0.1
 requests==2.32.3
 soupsieve==2.6
 typing_extensions==4.12.2
