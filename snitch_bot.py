@@ -23,7 +23,6 @@ f.close()
 
 async def run_guild_graveyard():
     while True:
-        print("update")
         latest_death = gg.guild_graveyard(guild, 0)
         if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "private":
             print("someone died")
