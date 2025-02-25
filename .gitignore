@@ -1,9 +1,10 @@
 .*
 *.html
-*.png
 __pycache__/
 itempics/
 skinpics/
-images/
+images/output.png
+images/renders.png
+images/sheets.png
 *.env
 *.json
