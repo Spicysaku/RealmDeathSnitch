@@ -14,16 +14,17 @@ intents = discord.Intents.default()
 client = discord.Client(intents=intents)
 channel_id = int(os.getenv("CHANNEL_ID"))
 channel = None
+guild = os.getenv("GUILD_NAME")
 
 imd.Download_Images()
 with open('last death.json', 'w') as f:
-    json.dump(gg.guild_graveyard("Anti Furry Force", 0), f)
+    json.dump(gg.guild_graveyard(guild, 0), f)
 f.close()
 
 async def run_guild_graveyard():
     while True:
         print("update")
-        latest_death = gg.guild_graveyard("Anti Furry Force", 0)
+        latest_death = gg.guild_graveyard(guild, 0)
         if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "private":
             print("someone died")
             with open('last death.json', 'w') as f:
