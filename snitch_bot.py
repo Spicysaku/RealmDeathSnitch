@@ -6,9 +6,9 @@ import json
 import os
 from dotenv import load_dotenv
 from pathlib import Path
+import Realm_image_parser as RIP
 
-load_dotenv(Path('/Users/valentinthevoz/Desktop/Python projects/RealmDeathSnitch/.venv/include/keys.env'))
-
+load_dotenv(Path('keys.env'))
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
@@ -29,9 +29,15 @@ async def run_guild_graveyard():
             with open('last death.json', 'w') as f:
                 json.dump(latest_death, f)
             f.close()
+            RIP.image_combiner(latest_death)
+            death_image = discord.File("./images/output.png")
             channel = client.get_channel(int(channel_id))
-            await channel.send(f"**{latest_death['player-name']}** died at **{latest_death['time']}**\n"
-                               f"**Killer:** {latest_death['killed_by']}\n")
+            await channel.send(f"**{latest_death['player-name']}** died on **{latest_death['time'].split('T')[0]} at {latest_death['time'].split('T')[1].split('Z')[0]}**\n"
+                               f"**Killed by:** {latest_death['killed_by']}\n**Base Fame:** {latest_death['base_fame']} **Total Fame:** {latest_death['total_fame']}\n"
+                               f"**Stats:** {latest_death['stats']}", file=death_image)
+            RIP.delete_all_files_in_folder("./itempics")
+            RIP.delete_all_files_in_folder("./skinpics")
+            
         await asyncio.sleep(60)  # Wait for 60 seconds
 
 @client.event

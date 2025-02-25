@@ -6,3 +6,4 @@ itempics/
 skinpics/
 images/
 *.env
+*.json
