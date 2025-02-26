@@ -1,7 +1,7 @@
 import os
 import requests
 
-def Download_Images1() -> None:
+def Download_Images() -> None:
     try:
         response = requests.get("https://www.realmeye.com/s/gt/img/sheets.png", stream=True)
         response.raise_for_status()
