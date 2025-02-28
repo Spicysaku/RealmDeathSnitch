@@ -18,6 +18,11 @@ guild = os.getenv("GUILD_NAME")
 
 imd.Download_Images()
 with open('last death.json', 'w') as f:
+    last_death = gg.guild_graveyard(guild, 0)
+    i = 1
+    while last_death['player-name'] == "private":
+        last_death = gg.guild_graveyard(guild, i)
+        i += 1
     json.dump(gg.guild_graveyard(guild, 0), f)
 f.close()
 
