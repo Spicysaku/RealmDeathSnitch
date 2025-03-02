@@ -23,7 +23,7 @@ with open('last death.json', 'w') as f:
     while last_death['player-name'] == "private":
         last_death = gg.guild_graveyard(guild, i)
         i += 1
-    json.dump(gg.guild_graveyard(guild, 0), f)
+    json.dump(last_death, f)
 f.close()
 
 async def run_guild_graveyard():
