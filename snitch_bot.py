@@ -20,7 +20,8 @@ imd.Download_Images()
 with open('last death.json', 'w') as f:
     last_death = gg.guild_graveyard(guild, 0)
     i = 1
-    while last_death['player-name'] == "private":
+    while last_death['player-name'] == "Private":
+        print("private death")
         last_death = gg.guild_graveyard(guild, i)
         i += 1
     json.dump(last_death, f)
@@ -29,7 +30,7 @@ f.close()
 async def run_guild_graveyard():
     while True:
         latest_death = gg.guild_graveyard(guild, 0)
-        if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "private":
+        if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "Private":
             print("someone died")
             with open('last death.json', 'w') as f:
                 json.dump(latest_death, f)
@@ -37,9 +38,9 @@ async def run_guild_graveyard():
             RIP.image_combiner(latest_death)
             death_image = discord.File("./images/output.png")
             channel = client.get_channel(int(channel_id))
-            await channel.send(f"**{latest_death['player-name']}** died\n"
+            await channel.send(f"**{latest_death['player-name']}** died on **{latest_death['time'].split('T')[0]} at {latest_death['time'].split('T')[1].split('Z')[0]}**\n"
                                f"**Killed by:** {latest_death['killed_by']}\n**Base Fame:** {latest_death['base_fame']} **Total Fame:** {latest_death['total_fame']}\n"
-                               f"**Stats:** {latest_death['stats']}", file=death_image)
+                               "**Stats:** {latest_death['stats']}", file=death_image)
             RIP.delete_all_files_in_folder("./itempics")
             RIP.delete_all_files_in_folder("./skinpics")
             
