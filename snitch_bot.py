@@ -40,7 +40,7 @@ async def run_guild_graveyard():
             channel = client.get_channel(int(channel_id))
             await channel.send(f"**{latest_death['player-name']}** died on **{latest_death['time'].split('T')[0]} at {latest_death['time'].split('T')[1].split('Z')[0]}**\n"
                                f"**Killed by:** {latest_death['killed_by']}\n**Base Fame:** {latest_death['base_fame']} **Total Fame:** {latest_death['total_fame']}\n"
-                               "**Stats:** {latest_death['stats']}", file=death_image)
+                               f"**Stats:** {latest_death['stats']}", file=death_image)
             RIP.delete_all_files_in_folder("./itempics")
             RIP.delete_all_files_in_folder("./skinpics")
             
