@@ -24,7 +24,8 @@ imd.Download_Images()
 with open('last death.json', 'w') as f:
     last_death = gg.guild_graveyard(guild, 0)
     i = 1
-    while last_death['player-name'] == "private":
+    while last_death['player-name'] == "Private":
+        print("private death")
         last_death = gg.guild_graveyard(guild, i)
         i += 1
     json.dump(last_death, f)
@@ -33,7 +34,7 @@ f.close()
 async def run_guild_graveyard():
     while True:
         latest_death = gg.guild_graveyard(guild, 0)
-        if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "private":
+        if latest_death != json.load(open('last death.json')) and latest_death['player-name'] != "Private":
             print("someone died")
             with open('last death.json', 'w') as f:
                 json.dump(latest_death, f)
