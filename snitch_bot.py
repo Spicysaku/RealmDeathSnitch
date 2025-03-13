@@ -15,7 +15,6 @@ load_dotenv(Path('keys.env'))
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-client = discord.Client(intents=intents)
 channel_id = int(os.getenv("CHANNEL_ID"))
 channel = None
 guild = os.getenv("GUILD_NAME")
@@ -50,13 +49,14 @@ async def run_guild_graveyard():
 
         await asyncio.sleep(60)  # Wait for 60 seconds
 
-@client.event
+@bot.event
 async def on_ready():
-    print(f'We have logged in as {client.user}')
-    client.loop.create_task(run_guild_graveyard())
+    print(f'We have logged in as {bot.user}')
+    bot.loop.create_task(run_guild_graveyard())
 
-@bot.command
+@bot.command(name = "characters")
 async def characters(ctx, player_name):
+    print("characters command")
     player_character_list = player_characters.get_player_characters(player_name)
     index = 0
     if len(player_character_list) < 6:
@@ -64,6 +64,9 @@ async def characters(ctx, player_name):
     else:
         index = 6
     for i in range(index):
+        RIP.skin_image_parser(player_character_list[i]['skindata']['x'], player_character_list[i]['skindata']['y'], f"{player_character_list[i]['class']}_{i}")
+        for item in player_character_list[i]['equipment']:
+            RIP.item_image_parser(item['x'], item['y'], item['name'])
         RIP.character_image_combiner(player_character_list[i], i)
         await ctx.send(file=discord.File("./images/alive_output.png"))
     RIP.delete_all_files_in_folder("./itempics")
@@ -71,4 +74,4 @@ async def characters(ctx, player_name):
 
 
 discord_key = os.getenv("DISCORD_KEY")
-client.run(discord_key)
+bot.run(discord_key)
