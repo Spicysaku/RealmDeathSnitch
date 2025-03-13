@@ -40,11 +40,12 @@ def death_image_combiner(death_dict:dict):
 
 def character_image_combiner(character_dict:dict, index:int):
     template = Image.open("./images/image-template.png")
-    skin = Image.open(f"./skinpics/{character_dict['class']}.png")
+    # Naming scheme for sin pics is class_index.png
+    skin = Image.open(f"./skinpics/{character_dict['class']}_{index}.png")
     combined = Image.new('RGBA', (template.width, template.height), (0, 0, 0, 0))
     combined.paste(template, (0, 0), template)
-    for i in range(len(death_dict['equipment'])):
-        item = Image.open(f"./itempics/{death_dict['equipment'][i]['name']}.png")
+    for i in range(len(character_dict['equipment'])):
+        item = Image.open(f"./itempics/{character_dict['equipment'][i]['name']}.png")
         combined.paste(item, (60 + (45 * i), 12), item)
     combined.paste(skin, (6, 7), skin)
     combined.resize((combined.width * 2, combined.height * 2))

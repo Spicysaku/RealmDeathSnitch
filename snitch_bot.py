@@ -57,7 +57,17 @@ async def on_ready():
 
 @bot.command
 async def characters(ctx, player_name):
-    pass
+    player_character_list = player_characters.get_player_characters(player_name)
+    index = 0
+    if len(player_character_list) < 6:
+        index = len(player_character_list)
+    else:
+        index = 6
+    for i in range(index):
+        RIP.character_image_combiner(player_character_list[i], i)
+        await ctx.send(file=discord.File("./images/alive_output.png"))
+    RIP.delete_all_files_in_folder("./itempics")
+    RIP.delete_all_files_in_folder("./skinpics")
 
 
 discord_key = os.getenv("DISCORD_KEY")
