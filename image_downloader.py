@@ -3,7 +3,7 @@ import requests
 
 def Download_Images() -> None:
     try:
-        response = requests.get("https://www.realmeye.com/s/gu/img/sheets.png", stream=True)
+        response = requests.get("https://www.realmeye.com/s/gy/img/sheets.png", stream=True)
         response.raise_for_status()
 
         file_name = os.path.basename("sheets.png")
@@ -20,7 +20,7 @@ def Download_Images() -> None:
             print(f"An error occurred: {e}, sheets.png")
 
     try:
-        response = requests.get("https://www.realmeye.com/s/gu/css/renders.png", stream=True)
+        response = requests.get("https://www.realmeye.com/s/gy/css/renders.png", stream=True)
         response.raise_for_status()
 
         file_name = os.path.basename("renders.png")
